@@ -9,7 +9,7 @@ from setuptools import setup
 
 setup(
     name='Flask-SAResource',
-    version='0.1',
+    version='0.1.1',
     url='https://www.github.com/mmautner/flask-saresource/',
     license='BSD',
     author='Max Mautner',
