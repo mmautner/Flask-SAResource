@@ -10,7 +10,7 @@ from .resource import create_single_resource
 from .resource import create_list_resource
 
 class SAResource(object):
-    def __init__(self, app=None, session=None, url_prefix=None):
+    def __init__(self, app=None, session=None, url_prefix='/api'):
         """Initialize SAResource object. Accepts an app object,
         a SQLAlchemy database session object and a url_prefix 
         for the resource's URIs.
@@ -21,15 +21,15 @@ class SAResource(object):
         self.session = session
         self.url_prefix = url_prefix
         if app is not None:
-            self.init_app(app)
+            self.init_app(app, url_prefix)
 
-    def init_app(self, app):
+    def init_app(self, app, prefix='/api'):
         if hasattr(app, 'teardown_appcontext'):
             app.teardown_appcontext(self.teardown)
         else:
             app.teardown_request(self.teardown)
 
-        self.api = Api(app)
+        self.api = Api(app, prefix=prefix)
 
     def add_resource(self, model):
         """Add single and collection endpoints for a given SQLAlchemy 
