@@ -41,13 +41,17 @@ def create_single_resource(model, session):
     class SingleResource(Resource):
         @marshal_with(model_fields)
         def get(self, id):
-            model_instance = session.query(model).filter(model.id == id).first()
+            model_instance = session.query(model)\
+                                    .filter(model.id == id)\
+                                    .first()
             if not model_instance:
                 abort(404, message="model {} doesn't exist".format(id))
             return model_instance
 
         def delete(self, id):
-            model_instance = session.query(model).filter(model.id == id).first()
+            model_instance = session.query(model)\
+                                    .filter(model.id == id)\
+                                    .first()
             if not model_instance:
                 abort(404, message="model {} doesn't exist".format(id))
             session.delete(model_instance)
@@ -57,7 +61,9 @@ def create_single_resource(model, session):
         @marshal_with(model_fields)
         def put(self, id):
             parsed_args = parser.parse_args()
-            model_instance = session.query(model).filter(model.id == id).first()
+            model_instance = session.query(model)\
+                                    .filter(model.id == id)\
+                                    .first()
 
             mapper = inspect(model)
             for column in mapper.c:
