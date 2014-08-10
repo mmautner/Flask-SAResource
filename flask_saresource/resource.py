@@ -29,59 +29,66 @@ def make_fields(model):
 
 def make_parser(model):
     parser = reqparse.RequestParser()
-    # ??
-    parser.add_argument('task', type=str)
+    mapper = inspect(model)
+    for column in mapper.c:
+        parser.add_argument(column.name, type=column.type.python_type)
     return parser
 
 def create_single_resource(model, session):
-
     model_fields = make_fields(model)
     parser = make_parser(model)
 
     class SingleResource(Resource):
         @marshal_with(model_fields)
         def get(self, id):
-            todo = session.query(model).filter(model.id == id).first()
-            if not todo:
+            model_instance = session.query(model).filter(model.id == id).first()
+            if not model_instance:
                 abort(404, message="model {} doesn't exist".format(id))
-            return todo
+            return model_instance
 
         def delete(self, id):
-            todo = session.query(model).filter(model.id == id).first()
-            if not todo:
+            model_instance = session.query(model).filter(model.id == id).first()
+            if not model_instance:
                 abort(404, message="model {} doesn't exist".format(id))
-            session.delete(todo)
+            session.delete(model_instance)
             session.commit()
             return {}, 204
 
         @marshal_with(model_fields)
         def put(self, id):
             parsed_args = parser.parse_args()
-            todo = session.query(model).filter(model.id == id).first()
-            todo.task = parsed_args['task']
-            session.add(todo)
+            model_instance = session.query(model).filter(model.id == id).first()
+
+            mapper = inspect(model)
+            for column in mapper.c:
+                setattr(model_instance, column.name, parsed_args[column.name])
+            setattr(model_instance, 'id', id)
+
+            session.merge(model_instance)
             session.commit()
-            return todo, 201
+            return model_instance, 201
 
     return SingleResource
 
 def create_list_resource(model, session):
-
     model_fields = make_fields(model)
     parser = make_parser(model)
 
     class ListResource(Resource):
         @marshal_with(model_fields)
         def get(self):
-            todos = session.query(model).all()
-            return todos
+            model_instances = session.query(model).all()
+            return model_instances
 
         @marshal_with(model_fields)
         def post(self):
             parsed_args = parser.parse_args()
-            todo = model(task=parsed_args['task'])
-            session.add(todo)
+            model_instance = model()
+            mapper = inspect(model)
+            for column in mapper.c:
+                setattr(model_instance, column.name, parsed_args[column.name])
+            session.add(model_instance)
             session.commit()
-            return todo, 201
+            return model_instance, 201
 
     return ListResource
