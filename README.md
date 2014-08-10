@@ -1,4 +1,4 @@
-Flask-Resource
+Flask-SAResource
 ===========
 
 Generate RESTful APIs from SQLAlchemy models in your Flask applications
@@ -6,7 +6,7 @@ Generate RESTful APIs from SQLAlchemy models in your Flask applications
 Introduction
 ------------
 
-Flask-Resource leverages SQLAlchemy declarative models to create RESTful API endpoints on 
+Flask-SAResource leverages SQLAlchemy declarative models to create RESTful API endpoints on 
 your [Flask](http://flask.pocoo.org/) application.
 
 Flask-Resource is an active project, well-tested and production ready.
@@ -73,14 +73,14 @@ Now you have the following available as RESTful API endpoints:
 
 Installation
 ------------
-To install Flask-Resource, simply::
+To install Flask-SAResource, simply::
 
-    pip install flask-resource
+    pip install Flask-SAResource
 
 Or alternatively, you can download the repository and install manually by doing::
 
-    git clone git@github.com:mmautner/flask-resource.git
-    cd flask-resource
+    git clone git@github.com:mmautner/flask-saresource.git
+    cd flask-saresource
     python setup.py install
 
 Tests

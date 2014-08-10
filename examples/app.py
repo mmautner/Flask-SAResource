@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 from flask import Flask
-from flask.ext.resource import SAResource
+from flask.ext.saresource import SAResource
 from models import db_session
 from models import Todo
  

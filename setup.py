@@ -1,22 +1,22 @@
 """
-Flask-SQLite3
+Flask-SAResource
 -------------
 
-This is the description for that library
+Generate RESTful APIs from SQLAlchemy models in your Flask applications
 """
 from setuptools import setup
 
 
 setup(
-    name='Flask-Resource',
+    name='Flask-SAResource',
     version='0.1',
-    url='https://www.github.com/mmautner/flask-resource/',
+    url='https://www.github.com/mmautner/flask-saresource/',
     license='BSD',
     author='Max Mautner',
     author_email='max@mustknow.io',
     description='Flask extension for building routes from SQLAlchemy models',
     long_description=__doc__,
-    packages=['flask_resource'],
+    packages=['flask_saresource'],
     zip_safe=False,
     include_package_data=True,
     platforms='any',
