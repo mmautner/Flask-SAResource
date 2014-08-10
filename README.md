@@ -9,8 +9,6 @@ Introduction
 Flask-SAResource leverages SQLAlchemy declarative models to create RESTful API endpoints on 
 your [Flask](http://flask.pocoo.org/) application.
 
-Flask-Resource is an active project, well-tested and production ready.
-
 Examples
 --------
 Check the */examples* folder. Contributions are welcome via GitHub as a *pull-request*.
@@ -24,9 +22,7 @@ from sqlalchemy import *
 from sqlalchemy.ext.declarative import declarative_base
 
 engine = create_engine('sqlite:////tmp/test.db', convert_unicode=True)
-db_session = scoped_session(sessionmaker(autocommit=False,
-                                         autoflush=False,
-                                         bind=engine))
+db_session = scoped_session(sessionmaker(autocommit=False, autoflush=False, bind=engine))
 
 Base = declarative_base()
 
@@ -52,6 +48,7 @@ app.run(debug=True)
 Now you have the following available as RESTful API endpoints:
 
 ```
+$ python
 >> import requests, json
 >> requests.get('http://localhost:5000/todos').json()
 []
